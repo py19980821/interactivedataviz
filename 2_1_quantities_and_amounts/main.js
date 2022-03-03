@@ -20,7 +20,7 @@ d3.csv('../data/squirrelActivities.csv', d3.autoType)
 
     // yscale - linear,count
   const xScale = d3.scaleLinear()
-                   .domain([0, 1500])
+                   .domain([0, d3.max(data, d=> d.count)])
                    .range([0, width])
     
   /* HTML ELEMENTS */
