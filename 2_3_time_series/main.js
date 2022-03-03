@@ -1,14 +1,14 @@
  /* CONSTANTS AND GLOBALS */
-// const width = ,
-//   height = ,
-//   margin = ;
+const width = window.inerWidth * .7,
+      height = window.innerWidth * .7,
+      margin = 30;
 
 /* LOAD DATA */
-d3.csv('[PATH_TO_YOUR_DATA]', d => {
+d3.csv('/Users/panyue/Documents/学习/Master/Semester/SPRING2022/DATA73200/interactivedataviz/data/populationOverTime.csv', d => {
   return {
-    // year: new Date(+d.Year, 0, 1),
-    // country: d.Entity,
-    // population: +d.Population
+     year: new Date(+d.Year, 0, 1),
+     country: d.Entity,
+     population: +d.Population
   }
 }).then(data => {
   console.log('data :>> ', data);

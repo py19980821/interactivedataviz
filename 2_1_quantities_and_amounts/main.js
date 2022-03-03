@@ -18,9 +18,9 @@ d3.csv('../data/squirrelActivities.csv', d3.autoType)
     /* HTML ELEMENTS */
     /** Select your container and append the visual elements to it */
     const svg = d3.select("#barchart")
-      .append("svg")
-      .attr("width", width)
-      .attr("height", height)
+                  .append("svg")
+                  .attr("width", width)
+                  .attr("height", height)
 
     // SELECT - JOIN - DRAW
     svg.selectAll("rect")
@@ -31,4 +31,6 @@ d3.csv('../data/squirrelActivities.csv', d3.autoType)
        .attr("x", d => xScale(d.activity))
        .attr("y", d => yScale(d.count))
 
+        
+    
   })
