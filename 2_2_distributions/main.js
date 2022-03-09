@@ -27,13 +27,15 @@ const xAxis = d3.axisBottom(xScale)
 const yAxis = d3.axisLeft(yScale)
 
 //append a group
+
 svg.append("g")
-   .attr("transform", `translate(0,${height-margin})`)
-   .call(xAxis)
- 
+   .attr("transform", `translate(0,${height - margin})`)
+   .call(xAxis);
+
+
 svg.append("g")
-   .attr("transform", `translate(0,${margin})`)
-   .call(yAxis)
+   .attr("transform", `translate(${margin},0)`)
+   .call(yAxis);
 
 const colorScale = d3.scaleOrdinal()
                      .domain(["Suburban", "Urban", "Rural"])
@@ -42,7 +44,7 @@ const colorScale = d3.scaleOrdinal()
 
 //create circles via SELECT-DATA-JOIN
 svg.selectAll("circle")
-   .data(data)
+   .data(data, d => d.id)
    .join("circle")
    .attr("cx", d => xScale(d.pct_BAdeg))
    .attr("cy", d => yScale(d.medinc16))
