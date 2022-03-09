@@ -6,7 +6,7 @@ const width = window.innerWidth * 0.8,
 /* LOAD DATA */
 d3.json("../data/environmentRatings.json", d3.autoType)
   .then(data => {
-    console.log(data)
+    console.log("data", data)
 
     /* SCALES */
     const xScale = d3.scaleLinear()
