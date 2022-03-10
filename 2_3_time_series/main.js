@@ -38,7 +38,7 @@ d3.csv('/Users/panyue/Documents/学习/Master/Semester/SPRING2022/DATA73200/inte
   // DRAW LINE
   svg.selectAll("path.line")
      .data([data])
-     .join("path.line")
+     .join("path")
      .attr("class", "line")
      .attr("stroke", "blue")
      .attr("fill", "none")
