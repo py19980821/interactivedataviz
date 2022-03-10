@@ -41,6 +41,12 @@ const colorScale = d3.scaleOrdinal()
                      .domain(["Suburban", "Urban", "Rural"])
                      .range(["red", "blue", "purple"])
 
+const sizeScale = d3.scaleOrdinal()
+                    .domain(["Suburban", "Urban", "Rural"])
+                    .range(["2", "1", "3"])
+
+                      
+
 
 //create circles via SELECT-DATA-JOIN
 const dot = svg.selectAll("circle")
@@ -48,6 +54,7 @@ const dot = svg.selectAll("circle")
                .join("circle")
                .attr("cx", d => xScale(d.pct_BAdeg))
                .attr("cy", d => yScale(d.medinc16))
-               .attr("r", 2)
+               .attr("r", d => sizeScale(d.urban_class))
                .attr("fill", d => colorScale(d.urban_class))
+               
   });
