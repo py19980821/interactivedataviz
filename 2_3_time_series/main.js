@@ -20,7 +20,7 @@ d3.csv('/Users/panyue/Documents/学习/Master/Semester/SPRING2022/DATA73200/inte
   
   const yScale = d3.scaleLinear()
      .domain(d3.extent(data, d=> d.population))
-     .range([height-margin,margin])   
+     .range([height - margin, margin])   
   // CREATE SVG ELEMENT
 
   const svg = d3.select("#container")
@@ -34,6 +34,7 @@ d3.csv('/Users/panyue/Documents/学习/Master/Semester/SPRING2022/DATA73200/inte
   const LineGen = d3.line()
           .x(d => xScale(d.year))
           .y(d => yScale(d.population))
+
   // DRAW LINE
   svg.selectAll("path.line")
      .data([data])
@@ -41,6 +42,6 @@ d3.csv('/Users/panyue/Documents/学习/Master/Semester/SPRING2022/DATA73200/inte
      .attr("class", "line")
      .attr("stroke", "blue")
      .attr("fill", "none")
-     .attr("d", d=>LineGen(d))
+     .attr("d", d=> LineGen(d))
 
 });

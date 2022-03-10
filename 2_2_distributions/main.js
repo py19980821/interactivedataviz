@@ -1,7 +1,7 @@
 /* CONSTANTS AND GLOBALS */
 const width = window.innerWidth * 0.8,
       height = window.innerHeight * 0.8,
-      margin = 20;
+      margin = 30;
 
 /* LOAD DATA */
 d3.json("../data/environmentRatings.json", d3.autoType)
@@ -32,7 +32,7 @@ d3.json("../data/environmentRatings.json", d3.autoType)
        .call(xAxis)
        
     svg.append("g")
-       .attr("transform", `translate(0,${margin})`)
+       .attr("transform", `translate(${margin},0)`)
        .call(yAxis)
 
     const colorScale = d3.scaleOrdinal()
@@ -43,12 +43,27 @@ d3.json("../data/environmentRatings.json", d3.autoType)
     //create circles via SELECT-DATA-JOIN
     svg.selectAll("circle")
        .data(data)
-       .join("circle")
+       .join(
+         enter => enter
+            .append("circle")
+            .attr("r", 1)
+            .attr("cx", d => xScale(d.envScore2020))
+            .attr("cy", d => yScale(d.ideologyScore2020))
+            .attr("fill", "black")
+              .transition()
+              .duration(2000) // in ms
+              .delay(200)
+                 .attr("r", 10)
+                 .attr("fill", d => colorScale(d.Party))
+       )
+         
+        /*"circle")
        .attr("cx", d => xScale(d.envScore2020))
        .attr("cy", d => yScale(d.ideologyScore2020))
        .attr("r", 5)
        //.attr("fill", "purple")
        .attr("fill", d => colorScale(d.Party))
+       */
    
 
   });
