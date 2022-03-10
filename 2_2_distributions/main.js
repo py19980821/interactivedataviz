@@ -5,7 +5,7 @@ const width = window.innerWidth * 0.8,
 
 
 /* LOAD DATA */
-d3.csv("/Users/panyue/Documents/学习/Master/Semester/FALL2021/QMSS81000/Lab4_Materials_DataViz/population_2016.csv", d3.autoType)
+d3.csv("/Users/panyue/Documents/学习/Master/Semester/SPRING2022/DATA73200/interactivedataviz/data/population_2016.csv", d3.autoType)
   .then(data => {
     console.log("data", data)
 
