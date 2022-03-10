@@ -1,22 +1,22 @@
 /* CONSTANTS AND GLOBALS */
 const width = window.innerWidth * 0.8,
       height = window.innerHeight * 0.8,
-      margin = 20;
+      margin = {top : 10, bottom : 20, left : 50, right : 10};
 
 
 /* LOAD DATA */
-d3.csv("/Users/panyue/Documents/学习/Master/Semester/SPRING2022/DATA73200/interactivedataviz/data/population_2016.csv", d3.autoType)
+d3.csv("../data/population_2016.csv", d3.autoType)
   .then(data => {
     console.log("data", data)
 
     /* SCALES */
 const xScale = d3.scaleLinear()
                  .domain([0, d3.max(data, d => d.pct_BAdeg)])
-                 .range([margin, width - margin])
+                 .range([margin.left, width - margin.right])
 
 const yScale = d3.scaleLinear()
                  .domain([0, d3.max(data, d => d.medinc16)])
-                 .range([height - margin, margin])
+                 .range([height - margin.top, margin.bottom])
     /* HTML ELEMENTS */
 const svg = d3.select("#container")
               .append("svg")
@@ -29,12 +29,12 @@ const yAxis = d3.axisLeft(yScale)
 //append a group
 
 svg.append("g")
-   .attr("transform", `translate(0,${height - margin})`)
+   .attr("transform", `translate(0, ${height - margin.bottom})`)
    .call(xAxis);
 
 
 svg.append("g")
-   .attr("transform", `translate(${margin},0)`)
+   .attr("transform", `translate(${margin.left}, 0)`)
    .call(yAxis);
 
 const colorScale = d3.scaleOrdinal()
@@ -44,10 +44,10 @@ const colorScale = d3.scaleOrdinal()
 
 //create circles via SELECT-DATA-JOIN
 const dot = svg.selectAll("circle")
-               .data("data", d => d.id)
+               .data(data, d => d.id)
                .join("circle")
                .attr("cx", d => xScale(d.pct_BAdeg))
                .attr("cy", d => yScale(d.medinc16))
-               .attr("r", 5)
+               .attr("r", 2)
                .attr("fill", d => colorScale(d.urban_class))
   });
