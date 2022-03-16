@@ -1,10 +1,10 @@
  /* CONSTANTS AND GLOBALS */
 const width = window.innerWidth * .7,
       height = window.innerWidth * .7,
-      margin = 30;
+      margin = {top:10, left:80, bottom:30, right:10};
 
 /* LOAD DATA */
-d3.csv('/Users/panyue/Documents/学习/Master/Semester/SPRING2022/DATA73200/interactivedataviz/data/populationOverTime.csv', d => {
+d3.csv('../data/populationOverTime.csv', d => {
   return {
      year: new Date(+d.Year, 0, 1),
      country: d.Entity,
@@ -15,12 +15,12 @@ d3.csv('/Users/panyue/Documents/学习/Master/Semester/SPRING2022/DATA73200/inte
 
   // SCALES
   const xScale = d3.scaleTime()
-     .domain(d3.extent(data, d=> d.year))
-     .range([margin, width-margin])
+                   .domain(d3.extent(data, d=> d.year))
+                   .range([margin.left, width-margin.right])
   
   const yScale = d3.scaleLinear()
-     .domain(d3.extent(data, d=> d.population))
-     .range([height - margin, margin])   
+                   .domain(d3.extent(data, d=> d.population))
+                   .range([height - margin.bottom, margin.top])   
   // CREATE SVG ELEMENT
 
   const svg = d3.select("#container")
@@ -29,11 +29,22 @@ d3.csv('/Users/panyue/Documents/学习/Master/Semester/SPRING2022/DATA73200/inte
                 .attr("height", height)
 
   // BUILD AND CALL AXES
+  const xAxis = d3.axisBottom(xScale)
+  const yAxis = d3.axisLeft(yScale)
+
+  svg.append("g")
+     .attr("transform", `translate(0,${height-margin.bottom})`)
+     .call(xAxis)
+
+  svg.append("g")
+  //.attr("transform", `translate(0,${height-margin.bottom})`)
+     .attr("transform", `translate(${margin.left}, ${0})`)
+     .call(yAxis)
 
   // LINE GENERATOR FUNCTION
   const LineGen = d3.line()
-          .x(d => xScale(d.year))
-          .y(d => yScale(d.population))
+                    .x(d => xScale(d.year))
+                    .y(d => yScale(d.population))
 
   // DRAW LINE
   svg.selectAll("path.line")
