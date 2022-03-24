@@ -46,7 +46,7 @@ function init() {
   // + UI ELEMENT SETUP
 const selectElement = d3.select("#dropdown")
 
-selectElement.selectALL("option")
+selectElement.selectAll("option")
              .data([{key: "All", label: "All"},
                     {key: "R", label: "Repiblican"},
                     {key: "D", label: "Democrat"}])
@@ -81,12 +81,12 @@ function draw() {
        .filter(d => state.selectedParty === d.Party || state.selectedParty === "All")
 
   const dot = svg
-    .selectAll("circle")
-    .data(filteredData, d => d.BioID)
+    .selectAll("circle", d => d.BioID)
+    .data(filteredData)
     .join(
       // + HANDLE ENTER SELECTION
       enter => enter.append("circle")
-                    .attr("r", radius)
+                    .attr("r", 2.5)
                     .attr("cx", 0)
                     .attr("cy", d => yScale(d.envScore2020))
                     .attr("fill", "green")
@@ -94,9 +94,9 @@ function draw() {
                       .transition()
                       .duration(1000)
                       .attr("r", radius)
-                      .attr("cx", xScale(d.ideologyScore2020))
-                      .attr("cy", yScale(d.envScore2020))
-                      .attr("fill","magenta"))
+                      .attr("cx", d => xScale(d.ideologyScore2020))
+                      .attr("cy", d => yScale(d.envScore2020))
+                      .attr("fill", "magenta")
                       
       ,
 
@@ -104,6 +104,6 @@ function draw() {
       update => update,
 
       // + HANDLE EXIT SELECTION
-      exit => exit
-    );
+      exit => exit.remove()
+    ));
 }
