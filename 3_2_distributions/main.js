@@ -10,6 +10,7 @@ let svg;
 let xScale;
 let yScale;
 let colorScale;
+let sizeScale;
 
 /* APPLICATION STATE */
 let state = {
@@ -41,6 +42,11 @@ function init() {
   colorScale = d3.scaleOrdinal()
                  .domain(["Suburban", "Urban", "Rural"])
                  .range(["red", "blue", "purple"])
+
+  sizeScale = d3.scaleLinear()
+                    .domain(d3.extent(state.data, d => d.Totpop16))
+                    .range([1,10])
+
   // + AXES
   const xAxis = d3.axisBottom(xScale)
   const yAxis = d3.axisLeft(yScale)
@@ -94,8 +100,8 @@ function draw() {
      console.log(filteredData)
      
   const dot = svg
-    .selectAll("circle", d => d.id)
-    .data(filteredData)
+    .selectAll("circle")
+    .data(filteredData, d => d.id)
     .join(
       // + HANDLE ENTER SELECTION
       enter => enter
@@ -107,16 +113,28 @@ function draw() {
       .call(enter => enter
         .transition()
         .duration(1000)
-        .attr("r", radius)
+        .attr("r", d => sizeScale(d.Totpop16))
         .attr("cx", d => xScale(d.pct_BAdeg))
         .attr("cy", d => yScale(d.medinc16))
-        .attr("fill", d => colorScale(d.urban_class))
-      ,
+        .attr("fill", d => colorScale(d.urban_class)),
 
       // + HANDLE UPDATE SELECTION
-      update => update,
+      update => update.call(sel => sel
+        .transition()
+        .duration(250)
+        .attr("r", radius * 1.5) // increase radius size
+        .transition()
+        .duration(250)
+        .attr("r", radius) // bring it back to original size
+      ),
 
       // + HANDLE EXIT SELECTION
-      exit => exit.remove()
+      exit => exit.call(sel => sel
+        .attr("opacity", 1)
+        .transition()
+        .duration(500)
+        .attr("opacity", 0)
+        .remove()
+      )
     ));
 }
