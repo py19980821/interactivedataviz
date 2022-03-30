@@ -49,10 +49,10 @@ function init() {
   const selectElement = d3.select("#dropdown")
 
   selectElement.selectAll("option")
-               .data([{key: "All", label:"All"}, 
-                     {key: "U", label:"Urban"},
-                     {key: "R", label:"Rural"},
-                     {key: "S", label:"Suburban"}])
+               .data([{key: "All", label: "All"}, 
+                     {key: "Urban", label: "Urban"},
+                     {key: "Rural", label: "Rural"},
+                     {key: "Suburban", label: "Suburban"}])
                .join("option")
                .attr("value", d => d.key)
                .text(d => d.label)
