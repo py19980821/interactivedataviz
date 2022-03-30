@@ -119,22 +119,11 @@ function draw() {
         .attr("fill", d => colorScale(d.urban_class)),
 
       // + HANDLE UPDATE SELECTION
-      update => update.call(sel => sel
-        .transition()
-        .duration(250)
-        .attr("r", radius * 1.5) // increase radius size
-        .transition()
-        .duration(250)
-        .attr("r", radius) // bring it back to original size
-      ),
+      update => update,
 
       // + HANDLE EXIT SELECTION
-      exit => exit.call(sel => sel
-        .attr("opacity", 1)
-        .transition()
-        .duration(500)
-        .attr("opacity", 0)
+      exit => exit
         .remove()
       )
-    ));
+    );
 }
